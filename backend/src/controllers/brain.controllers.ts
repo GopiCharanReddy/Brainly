@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { Content } from "../models/content.models";
 import { User } from "../models/user.models";
-import { Link } from "../models/link.models";
+import { Link } from "../models/link.models"
 
 const shareLink = async (req: Request, res: Response) => {
   const { share } = req.body;
