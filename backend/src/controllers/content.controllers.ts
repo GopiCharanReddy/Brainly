@@ -10,7 +10,6 @@ const postContent = async (req: Request, res: Response) => {
   await Content.create({
     link,
     title,
-    //@ts-ignore
     userId: req.userId,
     tags: [],
   });
@@ -19,7 +18,6 @@ const postContent = async (req: Request, res: Response) => {
 };
 
 const getContent = async (req: Request, res: Response) => {
-  //@ts-ignore
   const userId = req.userId;
   if (!userId) {
     res.json({ message: "User not found." });
@@ -41,7 +39,6 @@ const deleteContent = async (req: Request, res: Response) => {
   }
   await Content.deleteMany({
     contentId,
-    //@ts-ignore
     userId: req.userId
   })
 
