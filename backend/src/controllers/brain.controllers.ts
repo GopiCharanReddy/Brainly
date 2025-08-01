@@ -7,31 +7,39 @@ import shortid from "shortid";
 const shareLink = async (req: Request, res: Response) => {
   const { share } = req.body;
   if (share) {
-    const hash = shortid.generate();
-    await Link.create({
-      hash,
+    const existingLink = await Link.findOne({
       userId: req.userId,
     });
-    res.status(200).json({
-      hash,
-      message: "Share Link generated successfully.",
-    });
-    return;
+
+    if (!existingLink) {
+      const hash = shortid.generate()
+      await Link.create({
+        hash,
+        userId: req.userId
+      })
+      res.status(200).json({
+        hash,
+        message: "Share Link generated successfully.",
+      });
+      return;
+    } else {
+      res.json({
+        hash: existingLink.hash,
+      });
+      return;
+    }
   } else {
-    const {hash} = req.body
     await Link.deleteOne({
       userId: req.userId,
-      hash,
-    });
+    })
     res.json({
-      message: "Link removed successfully.",
-    });
+      message: "Link removed successfully."
+    })
   }
 };
 
 const sharedLink = async (req: Request, res: Response) => {
-  const hash = req.params.shareLink;
-  console.log(hash);
+  const hash = req.params.shareLink
   const link = await Link.findOne({
     hash,
   });
@@ -39,9 +47,8 @@ const sharedLink = async (req: Request, res: Response) => {
     res.status(411).json("Link not found.");
     return;
   }
-  console.log(link);
 
-  const content = await Content.findOne({
+  const content = await Content.find({
     userId: link.userId,
   });
 
