@@ -1,16 +1,18 @@
 import './App.css'
-import { Button } from './components/Button'
-import { PlusIcon } from './icons/PlusIcon'
-import { ShareIcon } from './icons/ShareIcon'
+import Card from './components/Card'
+import Header from './components/header/Header'
+import Sidebar from './components/sidebar/Sidebar'
 
 function App() {
   return (
     <>
-    <div className="h-screen flex justify-center items-center text-white bg-[#212529]">
-    <Button variant='primary' size='sm' text='Add content' startIcon={<PlusIcon size='lg' />} onClick={() => {""}}  />
-    <Button variant='secondary' size='md' text='Remove Content' startIcon={<PlusIcon size='lg' />} onClick={() => {""}}  />
-    <Button variant='secondary' size='lg' text='Share Content' startIcon={<ShareIcon   size='lg' />} onClick={() => {""}}  />
-    </div>
+      <div className='flex  bg-slate-100'>
+        <Sidebar />
+        <div>
+          <Header />
+          <Card />
+        </div>
+      </div>
     </>
   )
 }
