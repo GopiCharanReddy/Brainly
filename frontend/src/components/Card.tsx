@@ -11,7 +11,7 @@ type CardProps = {
 const Card = ({ title, link, type }: CardProps) => {
   return (
     <>
-      <div className="bg-white p-6 max-h-sm h-auto m-5 shadow-md rounded-lg max-w-sm w-auto">
+      <div className="bg-white p-6 min-w-80 m-5 shadow-md rounded-lg max-w-sm w-auto">
         <div className="flex items-center p-2 font-semibold justify-between">
           <TextFileIcon size="lg" />
           <div className="text-xl">{title}</div>
