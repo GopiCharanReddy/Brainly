@@ -5,7 +5,7 @@ import Header from '../header/Header'
 import Sidebar from '../sidebar/Sidebar'
 
 function Dashboard() {
-  const [modelOpen, setModelOpen] = useState(true)
+  const [modelOpen, setModelOpen] = useState(false)
   return (
     <>
       <div className='h-max min-h-screen flex bg-slate-100'>

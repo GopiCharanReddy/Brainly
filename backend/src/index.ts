@@ -5,7 +5,7 @@ import userRoute from './routes/user.routes'
 import contentRoute from './routes/content.routes'
 import brainRoute from './routes/brain.routes'
 import ApiError from './utils/ApiError'
-
+import cors from 'cors'
 
 dotenv.config()
 const app = express()
@@ -18,6 +18,9 @@ connectDB().then(() => {
 
 const router = express.Router();
 app.use(express.json())
+app.use(cors({
+  origin: 'http://localhost:5173'
+}))
 app.use('/api/v1', router)
 router.use('/users', userRoute)
 router.use('/content', contentRoute)

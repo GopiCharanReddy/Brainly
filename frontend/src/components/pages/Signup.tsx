@@ -1,53 +1,57 @@
 import { Button } from "../Button"
 import Input from "../Input"
 import BottomLink from "../BottomLink"
-import { useRef, useState, type ChangeEvent } from "react"
+import { useForm, type SubmitHandler } from "react-hook-form"
 import axios from "axios"
+import { useMutation } from "@tanstack/react-query"
 
 const Signup = () => {
-
-  const [username, setUsername] = useState<String>('s');
-  const [password, setPassword] = useState<String>('');
-  const [error, setError] = useState<String>('');
-
-  const usernameRef = useRef<HTMLInputElement>(null)
-  const passwordRef = useRef<HTMLInputElement>(null)
-
-  const handleClick = async (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault()
-    setError('')
-
-    if (!username || username === null || !password || password === null) {
-      setError("All fields are required.")
+  const { register, handleSubmit, formState: { errors } } = useForm<Credentials>()
+  const { mutate, isPending, isError } = useMutation({
+    mutationFn: (newUserData: Credentials) => {
+      return axios.post(`${import.meta.env.VITE_BASE_URL}/users/signup`, newUserData)
+    },
+    onSuccess: () => {
+      console.log("Signup successfull.")
+    },
+    onError: (error) => {
+      console.error("An error occurred:", error)
     }
-    axios.post(import.meta.env.BASE_URL, {
-      username,
-      password
-    })
-    // const username = usernameRef.current?.value
-    // const password = passwordRef.current?.value
-    // const BASE_URL = import.meta.env.BASE_URL
-    // axios.post(BASE_URL, {
-    //   username,
-    //   password
-    // })
+  });
+
+  const onSubmit: SubmitHandler<Credentials> = (data) => {
+
+    console.log(data);
+
+    mutate(data)
   }
 
   return (
     <div className='h-screen flex justify-center items-center bg-slate-200'>
       <div className='grid gap-y-5 bg-white text-black p-10 rounded-xl'>
-        <h1 className='text-3xl mb-4'>Signup</h1>
-        <div>
-          <Input onChange={(e: ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)} ref={usernameRef} type="email" placeholder="Username" autoFocus />
-          <Input onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} ref={passwordRef} type="password" placeholder="Password" />
-          <div className="flex justify-center">
-            <Button onClick={() => handleClick} size="md" variant="secondary" fullWidth text="Signup" />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <h1 className='text-3xl mb-4'>Signup</h1>
+          <div>
+            <Input {...register("username", { required: "Username is required." })} placeholder="Username" autoFocus />
+            {errors.username && <p className="text-sm text-red-500 mt-1">{errors.username.message}</p>}
+            <Input {...register("password", { required: "Password is required." })} type="password" placeholder="Password" />
+            {errors.password && <p className="text-sm text-red-500 mt-1">{errors.password.message}</p>}
+
+            <div className="flex justify-center">
+              <Button type="submit" size="md" text={isPending? "Signing in..." : "Signin"} variant="secondary" fullWidth/>
+            </div>
+            {isError && <p className="text-sm text-red-500 text-center">Failed to create account. Please try again.</p>}
           </div>
-        </div>
-        <BottomLink label={`Already have an account? `} to={'/signin'} text={'Signin'} />
+          <BottomLink label={`Already have an account? `} to={'/signin'} text={'Signin'} />
+        </form>
       </div>
     </div>
   )
+}
+
+export type Credentials = {
+  username: string,
+  password: string,
 }
 
 export default Signup

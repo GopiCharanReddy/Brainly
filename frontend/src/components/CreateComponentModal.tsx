@@ -30,7 +30,7 @@ const CreateComponentModal = ({open, onClose}: ModalType) => {
               </div>
             </div>
             <div>
-              <Input placeholder={"Title"} />
+              <Input autoFocus placeholder={"Title"} />
               <Input placeholder={"Link"} />
               <Button variant="secondary" text="Submit" size="md" />
             </div>
@@ -40,12 +40,13 @@ const CreateComponentModal = ({open, onClose}: ModalType) => {
   )
 }
 type InputProps = {
-  placeholder: string
+  placeholder: string,
+  autoFocus?: boolean
 }
-const Input = ({placeholder}: InputProps) => {
+const Input = (props: InputProps) => {
   return(
     <div>
-      <input type="text" placeholder={placeholder} className="px-4 py-2 border rounded m-2" />
+      <input type="text" placeholder={props.placeholder} autoFocus={props.autoFocus} className="px-4 py-2 border rounded m-2" />
     </div>
   )
 }

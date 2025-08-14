@@ -1,21 +1,14 @@
-import type { ChangeEvent } from "react";
+import { forwardRef, type InputHTMLAttributes } from "react";
 
-type InputProps = {
-  placeholder: string;
-  type?: string
-  autoFocus?: boolean
-  ref?: any
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void 
-}
+type InputProps = InputHTMLAttributes<HTMLInputElement>
 
-const Input = (props: InputProps) => {
+const Input = forwardRef<HTMLInputElement, InputProps>(({ type="text", ...rest }, ref) => {
   return (
-    <>
       <div>
-          <input onChange={props.onChange} type={props.type ?? "string"} autoFocus={props.autoFocus} className='border-1 border-slate-500 p-2 rounded-lg w-max m-2' placeholder={props.placeholder} />
+          <input {...rest} ref={ref} className='border-1 border-slate-500 p-2 rounded-lg w-max m-2' />
       </div>
-    </>
   )
 }
+)
 
 export default Input

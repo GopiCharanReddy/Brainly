@@ -7,7 +7,8 @@ type ButtonProps = {
   startIcon?: ReactElement,
   endIcon?: ReactElement,
   onClick?: () => void,
-  fullWidth?: boolean
+  fullWidth?: boolean,
+  type?: "submit"
 }
 
 const variantStyles = {
