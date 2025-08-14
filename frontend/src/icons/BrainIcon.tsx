@@ -1,4 +1,4 @@
-export const BrainIcon = () => {
+const BrainIcon = () => {
   return (
     <>
               <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="60" height="60" viewBox="0 0 1024.000000 1024.000000" preserveAspectRatio="xMidYMid meet">
@@ -16,3 +16,5 @@ Created by potrace 1.16, written by Peter Selinger 2001-2019
     </>
   )
 }
+
+export default BrainIcon
