@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Card from '../Card'
-import CreateComponentModal from '..//CreateComponentModal'
+import CreateComponentModal from '../CreateContentModal'
 import Header from '../header/Header'
 import Sidebar from '../sidebar/Sidebar'
 
