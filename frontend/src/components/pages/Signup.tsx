@@ -4,8 +4,12 @@ import BottomLink from "../BottomLink"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import axios from "axios"
 import { useMutation } from "@tanstack/react-query"
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 const Signup = () => {
+  const [apiError, setApiError] = useState<string | null>(null)
+  const navigate = useNavigate()
   const { register, handleSubmit, formState: { errors } } = useForm<Credentials>()
   const { mutate, isPending, isError } = useMutation({
     mutationFn: (newUserData: Credentials) => {
@@ -13,14 +17,27 @@ const Signup = () => {
     },
     onSuccess: () => {
       console.log("Signup successfull.")
+      navigate('/signin')
     },
     onError: (error) => {
-      console.error("An error occurred:", error)
+      if (axios.isAxiosError(error) && error.response) {
+        const serverMessage = error.response.data.message || "";
+
+        if (serverMessage.includes("is shorter than the minimum")) {
+          setApiError("Invalid Username.Try again.");
+        } else if (serverMessage.includes("duplicate key") || serverMessage.includes("already exists")) {
+          setApiError("This username is already taken.");
+        } else {
+          setApiError("An unexpected error occurred. Please try again.");
+        }
+      } else {
+        setApiError("Failed to connect to the server.");
+      }
     }
   });
 
   const onSubmit: SubmitHandler<Credentials> = (data) => {
-
+    setApiError(null)
     console.log(data);
 
     mutate(data)
@@ -38,9 +55,9 @@ const Signup = () => {
             {errors.password && <p className="text-sm text-red-500 mt-1">{errors.password.message}</p>}
 
             <div className="flex justify-center">
-              <Button type="submit" size="md" text={isPending? "Signing in..." : "Signin"} variant="secondary" fullWidth/>
+              <Button type="submit" size="md" text={isPending ? "Signing up..." : "Signup"} variant="secondary" fullWidth />
             </div>
-            {isError && <p className="text-sm text-red-500 text-center">Failed to create account. Please try again.</p>}
+            {isError && <p className="text-sm text-red-500 text-center">{apiError}</p>}
           </div>
           <BottomLink label={`Already have an account? `} to={'/signin'} text={'Signin'} />
         </form>
