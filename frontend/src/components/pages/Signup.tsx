@@ -55,7 +55,7 @@ const Signup = () => {
             {errors.password && <p className="text-sm text-red-500 mt-1">{errors.password.message}</p>}
 
             <div className="flex justify-center">
-              <Button type="submit" size="md" text={isPending ? "Signing up..." : "Signup"} variant="secondary" fullWidth />
+              <Button type="submit" size="md" text={isPending ? "Signing up..." : "Signup"} variant="secondary" fullWidth/>
             </div>
             {isError && <p className="text-sm text-red-500 text-center">{apiError}</p>}
           </div>
