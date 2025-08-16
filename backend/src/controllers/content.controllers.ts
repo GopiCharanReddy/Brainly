@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { Content } from "../models/content.models";
 
 const postContent = async (req: Request, res: Response) => {
-  const { title, link } = req.body;
+  const { title, link, type } = req.body;
   if (!link || !title) {
     res.status(411).json({ message: "All fields are required." });
     return;
@@ -10,6 +10,7 @@ const postContent = async (req: Request, res: Response) => {
   await Content.create({
     link,
     title,
+    type,
     userId: req.userId,
     tags: [],
   });

@@ -10,6 +10,10 @@ const contentSchema = new mongoose.Schema(
         ref: "Tag",
       },
     ],
+    type: {
+      type: String,
+      required: true,
+    },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
