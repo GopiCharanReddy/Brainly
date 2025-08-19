@@ -5,7 +5,7 @@ type InputProps = InputHTMLAttributes<HTMLInputElement>
 const Input = forwardRef<HTMLInputElement, InputProps>(({ ...rest }, ref) => {
   return (
       <div>
-          <input {...rest} ref={ref} className='border-1 border-slate-500 p-2 rounded-lg w-full mt-2' />
+          <input {...rest} ref={ref} className='border-1 border-slate-500 p-2 rounded-lg w-full mt-2 mb-2' />
       </div>
   )
 }

@@ -25,7 +25,7 @@ const CreateContentModal = ({ open, onClose }: ModalType) => {
   const { register, handleSubmit, formState: { errors } } = useForm<InputProps>()
   const { mutate, isPending, isError } = useMutation({
     mutationFn: (input: InputProps) => {
-      return axios.post(`${import.meta.env.VITE_BASE_URL}/content`,input,
+      return axios.post(`${import.meta.env.VITE_BASE_URL}/content`, input,
         {
           headers: {
             authorization: `Bearer ${localStorage.getItem('jwt')}`
@@ -34,6 +34,7 @@ const CreateContentModal = ({ open, onClose }: ModalType) => {
     },
     onSuccess: () => {
       console.log("Content added successfully.")
+      onClose()
     },
     onError: (error) => {
       console.log(error.message)

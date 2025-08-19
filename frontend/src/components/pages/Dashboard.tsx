@@ -5,7 +5,7 @@ import Header from '../header/Header'
 import Sidebar from '../sidebar/Sidebar'
 import useContent from '../useContent'
 
-function Dashboard() {
+const Dashboard = () => {
   const [modelOpen, setModelOpen] = useState(false)
   const {data} = useContent()
   return (
@@ -15,7 +15,7 @@ function Dashboard() {
         <Sidebar />
         <div className='w-screen min-h-screen ml-72'>
           <Header onClick={() => setModelOpen(true)} />
-          <div className='lg:flex'>
+          <div className='flex flex-wrap items-start'>
             {data?.map(({ id, type, link, title }) => <Card key={id} id={id} type={type} link={link} title={title} />)}
           </div>
         </div>

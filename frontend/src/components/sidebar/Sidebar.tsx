@@ -8,7 +8,7 @@ import SidebarItem from "./SidebarItem"
 
 const Sidebar = () => {
   return (
-    <div className="justify-start bg-white shadow-xl w-72 items-start fixed h-screen min-h-screen">
+    <div className="bg-white shadow-xl w-72 fixed h-full">
       <div className="flex text-2xl font-semibold m-2 cursor-pointer items-center">
         {<BrainIcon />} Second Brain
       </div>
