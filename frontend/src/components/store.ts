@@ -1,13 +1,21 @@
-import {create} from 'zustand'
+import { create } from "zustand";
 
 type ShareState = {
-  shareUrl: string,
-  setShareUrl: (url: string) => void
-}
+  shareUrl: string;
+  setShareUrl: (url: string) => void;
+};
 
-const useStore = create<ShareState>() ((set) => ({
-  shareUrl: '',
-  setShareUrl: (url:string) => set({shareUrl: url})
-}))
+type FilterState = {
+  filterContent: string | null;
+  setFilterContent: (type: string) => void;
+};
 
-export default useStore
+export const useStore = create<ShareState>()((set) => ({
+  shareUrl: "",
+  setShareUrl: (url: string) => set({ shareUrl: url }),
+}));
+
+export const useFilter = create<FilterState>()((set) => ({
+  filterContent: null,
+  setFilterContent: (type: string) => set({ filterContent: type }),
+}));

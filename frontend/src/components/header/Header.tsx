@@ -2,7 +2,7 @@ import { Button } from '../Button'
 import { PlusIcon } from '../../icons/PlusIcon'
 import { ShareIcon } from '../../icons/ShareIcon'
 import axios from 'axios'
-import useStore from '../store'
+import {useStore} from '../store'
 import { useNavigate } from 'react-router-dom'
 
 type HeaderProps = {
