@@ -3,6 +3,7 @@ import axios from "axios"
 import type { CardProps } from "./Card"
 
 const useContent = () => {
+  
   return useQuery<CardProps[]>({
     queryKey: ['contents'],
     queryFn: async () => {
@@ -11,7 +12,7 @@ const useContent = () => {
           authorization: `Bearer ${localStorage.getItem('jwt')}`
         }
       })
-      return response.data.content.map((item: any) => ({ ...item, id: item._id }));
+      return response.data.content
     }
   })
 }
