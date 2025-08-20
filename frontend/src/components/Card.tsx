@@ -3,12 +3,19 @@ import DeleteIcon from "../icons/DeleteIcon"
 import { ShareIcon } from "../icons/ShareIcon"
 import TextFileIcon from "../icons/TextFileIcon"
 import axios from "axios"
+import YoutubeIcon from "../YoutubeIcon"
+import TwitterIcon from "../icons/TwitterIcon"
+import LinkIcon from "../icons/LinkIcon"
+import HashtagIcon from "../icons/HashtagIcon"
+import type { IconProps } from "../icons/IconsProps"
+import type { ComponentType } from "react"
 
+type ContentType = "Twitter" | "Youtube" | "Documents" | "Links" | "Tags"
 export type CardProps = {
   _id?: string,
   title: string,
   link: string,
-  type: "Twitter" | "Youtube" | "Documents" | "Links" | "Tags" | null,
+  type: ContentType | null,
 }
 
 const Card = ({ _id, title, link, type }: CardProps) => {
@@ -34,12 +41,19 @@ const Card = ({ _id, title, link, type }: CardProps) => {
       console.log('Delete Failed: ', error)
     }
   })
-
+  const iconMap: Record<ContentType, ComponentType<IconProps>> = {
+    Youtube: YoutubeIcon,
+    Twitter: TwitterIcon,
+    Documents: TextFileIcon,
+    Links: LinkIcon,
+    Tags: HashtagIcon
+  }
+  const IconComponent: ComponentType<IconProps> = type ? iconMap[type] : TextFileIcon;
   return (
     <>
       <div id={_id} className="bg-white p-6 min-w-80 m-5 shadow-md rounded-lg max-w-sm w-auto">
         <div className="flex items-center p-2 font-semibold justify-between">
-          <TextFileIcon size="lg" />
+          <IconComponent size="lg" />
           <div className="text-xl">{title}</div>
           <div className="flex gap-2">
             <a href={link} target="_blank"></a>

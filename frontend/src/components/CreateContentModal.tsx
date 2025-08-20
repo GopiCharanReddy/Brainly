@@ -3,7 +3,7 @@ import CrossIcon from "../icons/CrossIcon"
 import { Button } from "./Button"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import Input from "./Input"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
 
 type ModalType = {
@@ -20,9 +20,9 @@ const CreateContentModal = ({ open, onClose }: ModalType) => {
     { value: 'Links', label: 'Links' },
     { value: 'Tags', label: 'Tags' }
   ]
-
+  const queryClient = useQueryClient()
   const [selectedType, setSelectedType] = useState('')
-  const { register, handleSubmit, formState: { errors } } = useForm<InputProps>()
+  const { register, handleSubmit, formState: { errors }, reset} = useForm<InputProps>()
   const { mutate, isPending, isError } = useMutation({
     mutationFn: (input: InputProps) => {
       return axios.post(`${import.meta.env.VITE_BASE_URL}/content`, input,
@@ -32,9 +32,12 @@ const CreateContentModal = ({ open, onClose }: ModalType) => {
           }
         })
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       console.log("Content added successfully.")
       onClose()
+      queryClient.invalidateQueries({ queryKey: ['content'] })
+      setSelectedType('')
+      reset()
     },
     onError: (error) => {
       console.log(error.message)
@@ -45,6 +48,7 @@ const CreateContentModal = ({ open, onClose }: ModalType) => {
   }
   const onSubmit: SubmitHandler<InputProps> = (data) => {
     mutate(data)
+
   }
   const modalRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
