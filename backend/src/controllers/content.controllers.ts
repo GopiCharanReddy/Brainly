@@ -33,16 +33,20 @@ const getContent = async (req: Request, res: Response) => {
 };
 
 const deleteContent = async (req: Request, res: Response) => {
-  const contentId = req.body.contentId;
-  if(!contentId) {
-    res.status(411).json({message: "Content not found."})
+  const { contentId } = req.body;
+  if (!contentId) {
+    res.status(411).json({ message: "Content not found." });
     return;
   }
-  await Content.deleteMany({
-    contentId,
-    userId: req.userId
-  })
-
-  res.status(200).json({message: "Content deleted successfully."})
-}
+  const deleteResult = await Content.deleteOne({
+    _id: contentId,
+    userId: req.userId,
+  });
+  if (deleteResult.deletedCount === 0) {
+    return res
+      .status(404)
+      .json({ message: "Content not found or user not authorized." });
+  }
+  res.status(200).json({ message: "Content deleted successfully." });
+};
 export { postContent, getContent, deleteContent };

@@ -8,12 +8,13 @@ import { useFilter } from '../store'
 
 const Dashboard = () => {
   const [modelOpen, setModelOpen] = useState(false)
-  const {data} = useContent()
+  const { data } = useContent()
   const { filterContent } = useFilter()
-  const filteredData = filterContent? data?.filter(item => item.type === filterContent): data
+  const filteredData = filterContent ? data?.filter(item => item.type === filterContent) : data
+
   return (
     <>
-      <div className='h-max min-h-screen flex bg-slate-100'>
+      <div className='flex bg-slate-100'>
         <CreateComponentModal open={modelOpen} onClose={() => { setModelOpen(false) }} />
         <Sidebar />
         <div className='w-screen min-h-screen ml-72'>

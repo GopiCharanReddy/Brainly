@@ -13,7 +13,7 @@ const Header = ({ onClick }: HeaderProps) => {
   const { setShareUrl } = useStore()
   const navigate = useNavigate()
   return (
-    <div className="flex justify-between px-5 p-2 items-center">
+    <div className="flex justify-between px-5 p-2 items-center sm: mb-10">
       <h1 className='text-black font-semibold text-3xl'>All Notes</h1>
       <div className='flex'>
         <Button variant='secondary' size='lg' text='Add Content' startIcon={<PlusIcon size='lg' />} onClick={onClick} />

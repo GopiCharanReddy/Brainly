@@ -5,7 +5,7 @@ import type { CardProps } from "./Card"
 const useContent = () => {
   
   return useQuery<CardProps[]>({
-    queryKey: ['contents'],
+    queryKey: ['content'],
     queryFn: async () => {
       const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/content`, {
         headers: {
